@@ -1,4 +1,4 @@
-use reqwest::{Response, Error, Client, RequestBuilder};
+use reqwest::{Error, Client, RequestBuilder};
 
 #[derive(Debug)]
 pub struct ElevenLabsAPI {

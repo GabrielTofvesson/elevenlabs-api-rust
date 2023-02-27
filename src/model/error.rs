@@ -1,5 +1,7 @@
 use serde::Deserialize;
 
+use super::history::AudioExtractionError;
+
 #[derive(Debug, Deserialize)]
 pub enum Location {
     StringLocation(String),
@@ -8,16 +10,16 @@ pub enum Location {
 
 #[derive(Debug, Deserialize)]
 pub struct ValidationError {
-    loc: Vec<Location>,
-    msg: String,
+    pub loc: Vec<Location>,
+    pub msg: String,
 
     #[serde(rename = "type")]
-    error_type: String,
+    pub error_type: String,
 }
 
 #[derive(Debug, Deserialize)]
 pub struct HTTPValidationError {
-    detail: Vec<ValidationError>,
+    pub detail: Vec<ValidationError>,
 }
 
 #[derive(Debug)]
@@ -35,5 +37,23 @@ impl From<reqwest::Error> for APIError {
 impl From<HTTPValidationError> for APIError {
     fn from(error: HTTPValidationError) -> Self {
         Self::HTTPError(error)
+    }
+}
+
+#[derive(Debug)]
+pub enum ZippedAudioApiError {
+    AudioExtractionError(AudioExtractionError),
+    APIError(APIError),
+}
+
+impl From<AudioExtractionError> for ZippedAudioApiError {
+    fn from(error: AudioExtractionError) -> Self {
+        Self::AudioExtractionError(error)
+    }
+}
+
+impl From<APIError> for ZippedAudioApiError {
+    fn from(error: APIError) -> Self {
+        Self::APIError(error)
     }
 }
