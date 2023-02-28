@@ -37,7 +37,7 @@ mod tests {
         let single_audio = api.get_history_audio(item.history_item_id.clone()).await;
         assert!(single_audio.is_ok());
 
-        //std::fs::write("test0.mp3", single_audio.audio(0).unwrap()).unwrap();
+        std::fs::write("test0.mp3", single_audio.unwrap().to_vec()).unwrap();
 
         if result.history.len() > 1 {
             let audio_result = api.download_history(HistoryItems {
@@ -50,8 +50,8 @@ mod tests {
             let audio = audio_result.audio();
             assert!(audio.len() == 2);
 
-            //std::fs::write("test1.mp3", audio.audio(0).unwrap()).unwrap();
-            //std::fs::write("test2.mp3", audio.audio(1).unwrap()).unwrap();
+            std::fs::write("test1.mp3", &audio[0]).unwrap();
+            std::fs::write("test2.mp3", &audio[1]).unwrap();
         }
     }
 }

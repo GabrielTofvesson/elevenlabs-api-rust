@@ -61,7 +61,7 @@ pub mod tts {
     }
 }
 
-pub mod voices {
+pub mod voice {
     use super::Endpoint;
 
     pub enum GET {
@@ -108,6 +108,10 @@ pub mod voices {
         EditVoice {
             voice_id: String,
         },
+        AddProfessionalVoice,
+        StartFineTuning {
+            voice_id: String,
+        },
     }
 
     impl Endpoint for POST {
@@ -116,6 +120,8 @@ pub mod voices {
                 POST::EditSettings { voice_id } => format!("/v1/voices/{}/settings/edit", voice_id),
                 POST::AddVoice => "/v1/voices".to_string(),
                 POST::EditVoice { voice_id } => format!("/v1/voices/{}", voice_id),
+                POST::AddProfessionalVoice => "/v1/voices/add-professional".to_string(),
+                POST::StartFineTuning { voice_id } => format!("/v1/voices/{}/start-fine-tuning", voice_id),
             }
         }
     }
