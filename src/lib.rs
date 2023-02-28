@@ -2,9 +2,6 @@ pub mod model;
 pub mod api;
 pub mod elevenlabs_api;
 
-extern crate reqwest;
-extern crate zip;
-
 #[cfg(test)]
 mod tests {
     use crate::model::history::HistoryItems;
