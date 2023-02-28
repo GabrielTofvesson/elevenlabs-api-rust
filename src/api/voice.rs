@@ -1,11 +1,11 @@
 use reqwest::multipart::Part;
 
-use crate::{elevenlabs_api::ElevenLabsAPI, model::{voice::{Voice, VoiceSettings, VoiceCreation, VoiceId}, error::APIError}};
+use crate::{elevenlabs_api::ElevenLabsAPI, model::{voice::{Voice, VoiceSettings, VoiceCreation, VoiceId, Voices}, error::APIError}};
 
 
 
 impl ElevenLabsAPI {
-    pub async fn get_voices(&self) -> Result<Vec<Voice>, APIError> {
+    pub async fn get_voices(&self) -> Result<Voices, APIError> {
         let response = self.get(crate::elevenlabs_api::voice::GET::List)?.send().await?;
 
         if response.status().is_success() {

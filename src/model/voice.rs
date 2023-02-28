@@ -24,7 +24,7 @@ pub enum FineTuningState {
 #[derive(Debug, Deserialize)]
 pub struct FineTuning {
     pub is_allowed_to_fine_tune: bool,
-    pub fine_tuning_requesed: bool,
+    pub fine_tuning_requested: bool,
     pub finetuning_state: FineTuningState,
     pub verification_attempts_count: u32,
 }
@@ -32,19 +32,19 @@ pub struct FineTuning {
 #[derive(Debug, Deserialize, Serialize)]
 pub struct VoiceSettings {
     pub stability: f32,
-    pub similiarity_boost: f32,
+    pub similarity_boost: f32,
 }
 
 #[derive(Debug, Deserialize)]
 pub struct Voice {
     pub voice_id: String,
     pub name: String,
-    pub samples: Vec<Sample>,
+    pub samples: Option<Vec<Sample>>,
     pub category: String,
     pub fine_tuning: FineTuning,
-    pub preview_url: String,
+    pub preview_url: Option<String>,
     pub available_for_tiers: Vec<String>,
-    pub settings: VoiceSettings,
+    pub settings: Option<VoiceSettings>,
     pub labels: HashMap<String, String>,
 }
 
@@ -76,4 +76,9 @@ impl VoiceCreation {
 #[derive(Debug, Deserialize)]
 pub struct VoiceId {
     pub voice_id: String,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct Voices {
+    pub voices: Vec<Voice>,
 }
